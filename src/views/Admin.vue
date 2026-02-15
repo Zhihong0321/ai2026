@@ -151,23 +151,6 @@ const fetchDepartments = async () => {
         }
     } catch(e) {
         console.warn('API error');
-        departments.value = [
-            { id: 1, name: 'Operations & Maintenance', short_name: 'O&M' },
-            { id: 2, name: 'Sales', short_name: 'SALES' },
-            { id: 3, name: 'Finance', short_name: 'FINANCE' },
-            { id: 4, name: 'Administration', short_name: 'ADMIN' },
-            { id: 5, name: 'SEDA', short_name: 'SEDA' },
-            { id: 6, name: 'Customer Service', short_name: 'CS' },
-            { id: 7, name: 'Human Resources', short_name: 'HR' },
-            { id: 8, name: 'Engineering', short_name: 'ENG' },
-            { id: 9, name: 'Control & Instrumentation', short_name: 'C&I' },
-            { id: 10, name: 'Information Technology', short_name: 'IT' },
-            { id: 11, name: 'Project Management', short_name: 'PROJECT' },
-            { id: 12, name: 'Procurement', short_name: 'PROC' },
-            { id: 13, name: 'Efficiency', short_name: 'EFF' },
-            { id: 14, name: 'Culture', short_name: 'CULTURE' },
-        ];
-        selectedDepartment.value = 10;
     }
 }
 

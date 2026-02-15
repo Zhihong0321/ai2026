@@ -13,9 +13,11 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// PURE DATABASE URL CONNECTION. NO SSL OVERRIDE.
+// Database Connection
+// SSL is required for Railway and most cloud Postgres providers
 const pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
 const __filename = fileURLToPath(import.meta.url);
