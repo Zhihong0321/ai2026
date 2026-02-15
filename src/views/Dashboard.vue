@@ -36,7 +36,7 @@
             class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group"
           >
             <span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">{{ dept.icon }}</span>
-            <span class="text-[10px] font-bold text-slate-700 truncate w-full text-center">{{ dept.shortName }}</span>
+            <span class="text-[10px] font-bold text-slate-700 truncate w-full text-center">{{ dept.short_name || dept.shortName }}</span>
           </button>
         </div>
       </section>
