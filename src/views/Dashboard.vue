@@ -101,29 +101,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-// Mock data fallback
-const mockDepartments = [
-  { id: 1, name: 'Operations & Maintenance', shortName: 'O&M', icon: 'settings' },
-  { id: 2, name: 'Sales', shortName: 'SALES', icon: 'handshake' },
-  { id: 3, name: 'Finance', shortName: 'FINANCE', icon: 'payments' },
-  { id: 4, name: 'Administration', shortName: 'ADMIN', icon: 'business_center' },
-  { id: 5, name: 'SEDA', shortName: 'SEDA', icon: 'eco' },
-  { id: 6, name: 'Customer Service', shortName: 'CS', icon: 'support_agent' },
-  { id: 7, name: 'Human Resources', shortName: 'HR', icon: 'groups' },
-  { id: 8, name: 'Engineering', shortName: 'ENG', icon: 'precision_manufacturing' },
-  { id: 9, name: 'Control & Instrumentation', shortName: 'C&I', icon: 'memory' },
-  { id: 10, name: 'Information Technology', shortName: 'IT', icon: 'terminal' },
-  { id: 11, name: 'Project Management', shortName: 'PROJECT', icon: 'assignment' },
-  { id: 12, name: 'Procurement', shortName: 'PROC', icon: 'shopping_cart' },
-  { id: 13, name: 'Efficiency', shortName: 'EFF', icon: 'speed' },
-  { id: 14, name: 'Culture', shortName: 'CULTURE', icon: 'favorite' },
-];
-
-const mockReports = [
-  { id: 1, dateMonth: '11-FEB', dateYear: '2026', deptName: 'IT Department', title: 'Network Infrastructure Expansion', description: 'Completed phase 2 of core router upgrades across regional hubs.' },
-  { id: 2, dateMonth: '10-FEB', dateYear: '2026', deptName: 'FINANCE', title: 'ERP Cloud Migration', description: 'Data cleansing phase for payroll modules finalized.' },
-  { id: 3, dateMonth: '08-FEB', dateYear: '2026', deptName: 'O&M', title: 'Smart Grid Sensors', description: 'Integrated 500+ IoT sensors into the centralized monitoring dashboard.' },
-];
+// Mock data deleted - relying on API
 
 const departments = ref<any[]>([]);
 const reports = ref<any[]>([]);
@@ -133,8 +111,7 @@ onMounted(async () => {
     const deptResponse = await fetch('/api/departments');
     if (deptResponse.ok) {
       departments.value = await deptResponse.json();
-    } else {
-      departments.value = mockDepartments;
+      console.warn('Failed to fetch departments');
     }
 
     const reportResponse = await fetch('/api/reports');
