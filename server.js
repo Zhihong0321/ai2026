@@ -14,11 +14,13 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Database Connection
-const pool = new pg.Pool({
+// Database Connection Configuration
+const dbConfig = {
     connectionString: process.env.DATABASE_URL || 'postgresql://postgres:password@localhost:5432/daily_report',
     ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
-});
+};
+
+const pool = new pg.Pool(dbConfig);
 
 // Serve static files in production
 const __filename = fileURLToPath(import.meta.url);
@@ -37,15 +39,13 @@ if (process.env.NODE_ENV === 'production') {
 
 // API Routes
 
-// API Routes
-
 // Get all departments
 app.get('/api/departments', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM ai2026_departments ORDER BY id ASC');
         res.json(result.rows);
     } catch (err) {
-        console.error(err);
+        console.error('DB Error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
@@ -68,7 +68,7 @@ app.get('/api/departments/:id', async (req, res) => {
             reports: reportsResult.rows,
         });
     } catch (err) {
-        console.error(err);
+        console.error('DB Error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
@@ -85,7 +85,7 @@ app.get('/api/reports', async (req, res) => {
     `);
         res.json(result.rows);
     } catch (err) {
-        console.error(err);
+        console.error('DB Error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
@@ -100,7 +100,7 @@ app.post('/api/reports', async (req, res) => {
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
-        console.error(err);
+        console.error('DB Error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 });
