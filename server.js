@@ -6,19 +6,46 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Database Connection
-// SSL is required for Railway and most cloud Postgres providers
+// CONFIG
 const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
+
+// PROOF ROUTE - Visit /proof to see if DB is readable
+app.get('/proof', async (req, res) => {
+    try {
+        console.log('Testing DB connection...');
+        const result = await pool.query('SELECT NOW() as time, count(*) as count FROM ai2026_departments');
+
+        // Return simple HTML proof
+        res.send(`
+            <h1>✅ PROOF: APP CAN READ POSTGRES</h1>
+            <p><strong>Database Status:</strong> CONNECTED</p>
+            <p><strong>Server Time:</strong> ${result.rows[0].time}</p>
+            <p><strong>Department Count:</strong> ${result.rows[0].count}</p>
+            <hr/>
+            <pre>${JSON.stringify(result.rows, null, 2)}</pre>
+        `);
+    } catch (err) {
+        console.error('DB Error:', err);
+        res.status(500).send(`
+            <h1>❌ FAILED: APP CANNOT READ POSTGRES</h1>
+            <p><strong>Error:</strong> ${err.message}</p>
+            <pre>${err.stack}</pre>
+        `);
+    }
+});
+
+/* =========================================
+   STANDARD ROUTES BELOW
+   ========================================= */
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +53,7 @@ const __dirname = path.dirname(__filename);
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'dist')));
     app.get(/.*/, (req, res) => {
-        if (!req.path.startsWith('/api')) {
+        if (!req.path.startsWith('/api') && !req.path.startsWith('/proof')) {
             res.sendFile(path.join(__dirname, 'dist', 'index.html'));
         }
     });
