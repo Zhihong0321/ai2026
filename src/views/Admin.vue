@@ -137,28 +137,17 @@ const fetchDepartments = async () => {
         const res = await fetch('/api/departments');
         if(res.ok) {
             departments.value = await res.json();
+            
+            // If API returns empty array (db exists but empty), use fallback
+            if (departments.value.length === 0) {
+                 throw new Error('Empty departments');
+            }
+
             // Default select IT if exists
             const itDept = departments.value.find((d: any) => d.short_name === 'IT');
             if(itDept) selectedDepartment.value = Number(itDept.id);
         } else {
-             // Mock fallback logic
-             departments.value = [
-                { id: 1, name: 'Operations & Maintenance', short_name: 'O&M' },
-                { id: 2, name: 'Sales', short_name: 'SALES' },
-                { id: 3, name: 'Finance', short_name: 'FINANCE' },
-                { id: 4, name: 'Administration', short_name: 'ADMIN' },
-                { id: 5, name: 'SEDA', short_name: 'SEDA' },
-                { id: 6, name: 'Customer Service', short_name: 'CS' },
-                { id: 7, name: 'Human Resources', short_name: 'HR' },
-                { id: 8, name: 'Engineering', short_name: 'ENG' },
-                { id: 9, name: 'Control & Instrumentation', short_name: 'C&I' },
-                { id: 10, name: 'Information Technology', short_name: 'IT' },
-                { id: 11, name: 'Project Management', short_name: 'PROJECT' },
-                { id: 12, name: 'Procurement', short_name: 'PROC' },
-                { id: 13, name: 'Efficiency', short_name: 'EFF' },
-                { id: 14, name: 'Culture', short_name: 'CULTURE' },
-             ];
-             selectedDepartment.value = 10;
+             throw new Error('API Error');
         }
     } catch(e) {
         console.warn('API error');
