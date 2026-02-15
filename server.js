@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -28,92 +29,99 @@ pool.connect().then(client => {
     });
 }).catch(err => {
     console.error('❌ Failed to connect to database on startup:', err.message);
-    if (!process.env.DATABASE_URL) {
-        console.error('⚠️ DATABASE_URL environment variable is MISSING in process.env!');
-    }
 });
 
-// PROOF ROUTE - Visit /proof to see if DB is readable
+// PROOF ROUTE
 app.get('/proof', async (req, res) => {
     try {
-        console.log('Testing DB connection...');
         const result = await pool.query('SELECT NOW() as time, count(*) as count FROM ai2026_departments');
-
-        // Return simple HTML proof
-        res.send(`
-            <h1>✅ PROOF: APP CAN READ POSTGRES</h1>
-            <p><strong>Database Status:</strong> CONNECTED</p>
-            <p><strong>Server Time:</strong> ${result.rows[0].time}</p>
-            <p><strong>Department Count:</strong> ${result.rows[0].count}</p>
-            <hr/>
-            <pre>${JSON.stringify(result.rows, null, 2)}</pre>
-        `);
+        res.send(`<h1>✅ PROOF: CONNECTED</h1><pre>${JSON.stringify(result.rows, null, 2)}</pre>`);
     } catch (err) {
-        console.error('DB Error:', err);
-        res.status(500).send(`
-            <h1>❌ FAILED: APP CANNOT READ POSTGRES</h1>
-            <p><strong>Error:</strong> ${err.message}</p>
-            <p><strong>Config:</strong> ${JSON.stringify(dbConfig, null, 2)}</p>
-            <pre>${err.stack}</pre>
-        `);
+        res.status(500).send(`<h1>❌ ERROR</h1><pre>${err.stack}</pre>`);
     }
 });
 
-/* =========================================
-   STANDARD ROUTES BELOW
-   ========================================= */
-
+// SERVE STATIC FILES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'dist')));
-    app.get(/.*/, (req, res) => {
-        if (!req.path.startsWith('/api') && !req.path.startsWith('/proof')) {
-            res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-        }
-    });
 }
 
+// API ROUTES - WITH EXPLICIT TRY/CATCH LOGGING
+
 app.get('/api/departments', async (req, res) => {
-    const result = await pool.query('SELECT * FROM ai2026_departments ORDER BY id ASC');
-    res.json(result.rows);
+    try {
+        console.log('GET /api/departments request received');
+        const result = await pool.query('SELECT * FROM ai2026_departments ORDER BY id ASC');
+        console.log(`Returning ${result.rows.length} departments`);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('ERROR in GET /api/departments:', err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.get('/api/departments/:id', async (req, res) => {
-    const { id } = req.params;
-    const deptResult = await pool.query('SELECT * FROM ai2026_departments WHERE id = $1', [id]);
-    const plansResult = await pool.query('SELECT * FROM ai2026_department_plans WHERE department_id = $1', [id]);
-    const reportsResult = await pool.query('SELECT * FROM ai2026_work_reports WHERE department_id = $1 ORDER BY report_date DESC LIMIT 5', [id]);
+    try {
+        const { id } = req.params;
+        const deptResult = await pool.query('SELECT * FROM ai2026_departments WHERE id = $1', [id]);
+        const plansResult = await pool.query('SELECT * FROM ai2026_department_plans WHERE department_id = $1', [id]);
+        const reportsResult = await pool.query('SELECT * FROM ai2026_work_reports WHERE department_id = $1 ORDER BY report_date DESC LIMIT 5', [id]);
 
-    if (deptResult.rows.length === 0) return res.status(404).json({ error: 'Not found' });
+        if (deptResult.rows.length === 0) return res.status(404).json({ error: 'Not found' });
 
-    res.json({
-        department: deptResult.rows[0],
-        plans: plansResult.rows,
-        reports: reportsResult.rows,
-    });
+        res.json({
+            department: deptResult.rows[0],
+            plans: plansResult.rows,
+            reports: reportsResult.rows,
+        });
+    } catch (err) {
+        console.error(`ERROR in GET /api/departments/${req.params.id}:`, err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.get('/api/reports', async (req, res) => {
-    const result = await pool.query(`
-      SELECT r.*, d.name as dept_name, d.short_name as dept_short_name
-      FROM ai2026_work_reports r
-      JOIN ai2026_departments d ON r.department_id = d.id
-      ORDER BY r.report_date DESC
-      LIMIT 20
-    `);
-    res.json(result.rows);
+    try {
+        console.log('GET /api/reports request received');
+        const result = await pool.query(`
+          SELECT r.*, d.name as dept_name, d.short_name as dept_short_name
+          FROM ai2026_work_reports r
+          JOIN ai2026_departments d ON r.department_id = d.id
+          ORDER BY r.report_date DESC
+          LIMIT 20
+        `);
+        console.log(`Returning ${result.rows.length} reports`);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('ERROR in GET /api/reports:', err);
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.post('/api/reports', async (req, res) => {
-    const { title, description, department_id, report_date, image_url, youtube_url } = req.body;
-    const result = await pool.query(
-        'INSERT INTO ai2026_work_reports (title, description, department_id, report_date, image_url, youtube_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [title, description, department_id, report_date, image_url, youtube_url]
-    );
-    res.status(201).json(result.rows[0]);
+    try {
+        console.log('POST /api/reports received:', req.body);
+        const { title, description, department_id, report_date, image_url, youtube_url } = req.body;
+        const result = await pool.query(
+            'INSERT INTO ai2026_work_reports (title, description, department_id, report_date, image_url, youtube_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+            [title, description, department_id, report_date, image_url, youtube_url]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error('ERROR in POST /api/reports:', err);
+        res.status(500).json({ error: err.message });
+    }
 });
+
+// CATCH-ALL ROUTE (Must be last)
+if (process.env.NODE_ENV === 'production') {
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    });
+}
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
