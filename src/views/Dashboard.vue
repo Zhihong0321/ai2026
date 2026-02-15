@@ -1,5 +1,8 @@
 <template>
   <div class="bg-background-light text-slate-900 min-h-screen flex flex-col pb-24 relative">
+    <div v-if="error" class="bg-red-500 text-white p-4 text-center sticky top-0 z-50 font-bold">
+        ❌ Error: {{ error }}
+    </div>
     <!-- Top Navigation / Header -->
     <header class="sticky top-0 z-10 bg-white border-b border-slate-200 px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -104,7 +107,9 @@ const router = useRouter();
 // Mock data deleted - relying on API
 
 const departments = ref<any[]>([]);
+const departments = ref<any[]>([]);
 const reports = ref<any[]>([]);
+const error = ref('');
 
 onMounted(async () => {
   try {
@@ -125,10 +130,12 @@ onMounted(async () => {
         dateYear: new Date(r.report_date).getFullYear(),
       }));
     } else {
+    } else {
       console.log('Failed to fetch reports');
     }
-  } catch (e) {
+  } catch (e: any) {
     console.warn('API error', e);
+    error.value = e.message || 'Unknown API Error';
   }
 });
 
