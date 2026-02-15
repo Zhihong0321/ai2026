@@ -17,6 +17,7 @@ app.use(express.json());
 // Database Connection
 const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL || 'postgresql://postgres:password@localhost:5432/daily_report',
+    ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
 // Serve static files in production
