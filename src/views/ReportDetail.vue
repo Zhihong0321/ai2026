@@ -24,9 +24,9 @@
         </div>
 
         <!-- YouTube -->
-        <div v-if="getYouTubeEmbed(report.youtube_url)" class="rounded-xl overflow-hidden border border-slate-200 shadow-sm aspect-video">
+        <div v-if="getVideoEmbed(report.youtube_url)" class="rounded-xl overflow-hidden border border-slate-200 shadow-sm aspect-video">
             <iframe 
-                :src="getYouTubeEmbed(report.youtube_url) || ''" 
+                :src="getVideoEmbed(report.youtube_url) || ''" 
                 title="Report Video"
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -92,11 +92,25 @@ const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 };
 
-const getYouTubeEmbed = (url: string) => {
+const getVideoEmbed = (url: string) => {
     if (!url) return null;
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2] && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+    
+    // Check for YouTube
+    const ytRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const ytMatch = url.match(ytRegExp);
+    if (ytMatch && ytMatch[2] && ytMatch[2].length === 11) {
+        return `https://www.youtube.com/embed/${ytMatch[2]}`;
+    }
+
+    // Check for Google Drive
+    // Pattern: drive.google.com/file/d/[ID]/view
+    const driveRegExp = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+    const driveMatch = url.match(driveRegExp);
+    if (driveMatch && driveMatch[1]) {
+        return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+    }
+
+    return null;
 };
 
 const handleImageError = (e: Event) => {
