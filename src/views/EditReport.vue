@@ -30,6 +30,17 @@
 
     <main class="flex-1 overflow-y-auto p-6 space-y-6" v-if="departments.length > 0 || loading">
       
+      <!-- Department Selector -->
+      <div class="space-y-1.5">
+        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Select Department</label>
+        <div class="relative">
+          <select v-model="selectedDepartment" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 pl-4 pr-10 focus:border-primary focus:ring-primary appearance-none">
+            <option v-for="dept in departments" :key="dept.id" :value="dept.id">{{ dept.name }}</option>
+          </select>
+          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">expand_more</span>
+        </div>
+      </div>
+
       <!-- Report Date -->
       <div class="space-y-1.5">
         <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Report Date</label>
@@ -103,7 +114,8 @@ const password = ref('');
 const error = ref('');
 
 // Form data
-const departments = ref<any[]>([]); // Just for check
+const departments = ref<any[]>([]); 
+const selectedDepartment = ref<number | null>(null);
 const reportDate = ref('');
 const reportTitle = ref('');
 const reportDescription = ref('');
@@ -135,6 +147,12 @@ const toggleTag = (tag: string) => {
 
 const fetchReport = async () => {
     try {
+        // Fetch departments first
+        const deptRes = await fetch('/api/departments');
+        if (deptRes.ok) {
+            departments.value = await deptRes.json();
+        }
+
         const res = await fetch(`/api/reports/${reportId}`);
         if(res.ok) {
             const data = await res.json();
@@ -144,7 +162,7 @@ const fetchReport = async () => {
             imageUrl.value = data.image_url || '';
             youtubeUrl.value = data.youtube_url || '';
             selectedTags.value = data.tags ? data.tags.split(',') : [];
-            departments.value = [true]; // Hack to show form
+            selectedDepartment.value = data.department_id;
         } else {
              throw new Error('API Error');
         }
@@ -173,7 +191,8 @@ const updateReport = async () => {
                 image_url: imageUrl.value,
                 youtube_url: youtubeUrl.value,
                 report_date: reportDate.value,
-                tags: selectedTags.value.join(',')
+                tags: selectedTags.value.join(','),
+                department_id: selectedDepartment.value
             })
         });
         

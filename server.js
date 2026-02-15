@@ -141,11 +141,11 @@ app.post('/api/reports', async (req, res) => {
 app.put('/api/reports/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, image_url, youtube_url, report_date, tags } = req.body;
+        const { title, description, image_url, youtube_url, report_date, tags, department_id } = req.body;
 
         const result = await pool.query(
-            'UPDATE ai2026_work_reports SET title = $1, description = $2, image_url = $3, youtube_url = $4, report_date = $5, tags = $6 WHERE id = $7 RETURNING *',
-            [title, description, image_url, youtube_url, report_date, tags, id]
+            'UPDATE ai2026_work_reports SET title = $1, description = $2, image_url = $3, youtube_url = $4, report_date = $5, tags = $6, department_id = $7 WHERE id = $8 RETURNING *',
+            [title, description, image_url, youtube_url, report_date, tags, department_id, id]
         );
 
         if (result.rows.length === 0) return res.status(404).json({ error: 'Report not found' });
