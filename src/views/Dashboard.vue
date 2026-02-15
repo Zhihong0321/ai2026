@@ -147,12 +147,10 @@ onMounted(async () => {
         dateYear: new Date(r.report_date).getFullYear(),
       }));
     } else {
-      reports.value = mockReports;
+      console.log('Failed to fetch reports');
     }
   } catch (e) {
-    console.warn('API not available, using mock data');
-    departments.value = mockDepartments;
-    reports.value = mockReports;
+    console.warn('API error', e);
   }
 });
 
