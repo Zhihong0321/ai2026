@@ -69,13 +69,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const deptId = route.params.id;
 
-const deptId = route.params.id;
-const router = useRouter();
+
 
 const department = ref<any>(null);
 const reports = ref<any[]>([]);
