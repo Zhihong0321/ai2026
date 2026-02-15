@@ -133,8 +133,6 @@ const deleteReport = async () => {
 };
 
 const editReport = () => {
-    // Navigate to admin with edit mode (future implementation)
-    // For now simple alert
-    alert('Edit feature coming in next patch - please use Delete and Repost for now.');
+    router.push(`/report/${reportId}/edit`);
 };
 </script>
