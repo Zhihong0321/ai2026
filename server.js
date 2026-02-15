@@ -125,10 +125,10 @@ app.get('/api/reports/:id', async (req, res) => {
 app.post('/api/reports', async (req, res) => {
     try {
         console.log('POST /api/reports received:', req.body);
-        const { title, description, department_id, report_date, image_url, youtube_url } = req.body;
+        const { title, description, department_id, report_date, image_url, youtube_url, tags } = req.body;
         const result = await pool.query(
-            'INSERT INTO ai2026_work_reports (title, description, department_id, report_date, image_url, youtube_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-            [title, description, department_id, report_date, image_url, youtube_url]
+            'INSERT INTO ai2026_work_reports (title, description, department_id, report_date, image_url, youtube_url, tags) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+            [title, description, department_id, report_date, image_url, youtube_url, tags]
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
@@ -141,11 +141,11 @@ app.post('/api/reports', async (req, res) => {
 app.put('/api/reports/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, image_url, youtube_url } = req.body;
+        const { title, description, image_url, youtube_url, report_date, tags } = req.body;
 
         const result = await pool.query(
-            'UPDATE ai2026_work_reports SET title = $1, description = $2, image_url = $3, youtube_url = $4 WHERE id = $5 RETURNING *',
-            [title, description, image_url, youtube_url, id]
+            'UPDATE ai2026_work_reports SET title = $1, description = $2, image_url = $3, youtube_url = $4, report_date = $5, tags = $6 WHERE id = $7 RETURNING *',
+            [title, description, image_url, youtube_url, report_date, tags, id]
         );
 
         if (result.rows.length === 0) return res.status(404).json({ error: 'Report not found' });

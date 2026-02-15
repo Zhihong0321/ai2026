@@ -29,6 +29,20 @@
               <span class="text-[11px] font-bold uppercase tracking-wider text-primary bg-primary/5 px-2 py-0.5 rounded">{{ report.date }}</span>
               <span class="material-symbols-outlined text-green-500 text-[18px]">check_circle</span>
             </div>
+            <!-- Tags -->
+            <div v-if="report.tags" class="flex flex-wrap gap-1 mb-2">
+                <span v-for="tag in report.tags.split(',')" :key="tag" 
+                :class="{
+                    'bg-emerald-100 text-emerald-700': tag === 'NEW FUNCTION',
+                    'bg-purple-100 text-purple-700': tag === 'AI',
+                    'bg-amber-100 text-amber-700': tag === 'FIX',
+                    'bg-blue-100 text-blue-700': tag === 'MEETING & TUTORIAL'
+                }"
+                class="px-1.5 py-0.5 text-[9px] font-bold rounded border border-transparent uppercase"
+                >
+                {{ tag }}
+                </span>
+            </div>
             <p class="text-sm font-semibold text-[#111418] mb-1">{{ report.title }}</p>
             <p class="text-sm text-[#637588] leading-normal">{{ report.description }}</p>
           </div>

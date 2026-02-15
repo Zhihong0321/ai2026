@@ -30,6 +30,12 @@
 
     <main class="flex-1 overflow-y-auto p-6 space-y-6" v-if="departments.length > 0 || loading">
       
+      <!-- Report Date -->
+      <div class="space-y-1.5">
+        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Report Date</label>
+        <input v-model="reportDate" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="date"/>
+      </div>
+
       <!-- Report Title -->
       <div class="space-y-1.5">
         <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Report Title</label>
@@ -49,8 +55,24 @@
           <input v-model="imageUrl" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="text" placeholder="https://..."/>
         </div>
         <div class="space-y-1.5">
-          <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Youtube Embed URL (Optional)</label>
-          <input v-model="youtubeUrl" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="text" placeholder="https://youtube.com/..."/>
+          <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Video URL (YouTube / Google Drive)</label>
+          <input v-model="youtubeUrl" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="text" placeholder="https://youtube.com/... or Google Drive link"/>
+        </div>
+      </div>
+
+      <!-- Tags Selection -->
+      <div class="space-y-2">
+        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Tags</label>
+        <div class="flex flex-wrap gap-2">
+            <button 
+                v-for="tag in availableTags" 
+                :key="tag"
+                @click="toggleTag(tag)"
+                :class="selectedTags.includes(tag) ? 'bg-primary text-white border-primary' : 'bg-white text-slate-600 border-slate-200'"
+                class="px-3 py-1.5 text-xs font-bold rounded-full border transition-colors uppercase"
+            >
+                {{ tag }}
+            </button>
         </div>
       </div>
 
@@ -82,6 +104,7 @@ const error = ref('');
 
 // Form data
 const departments = ref<any[]>([]); // Just for check
+const reportDate = ref('');
 const reportTitle = ref('');
 const reportDescription = ref('');
 const imageUrl = ref('');
@@ -100,15 +123,27 @@ const login = () => {
   }
 };
 
+const availableTags = ['NEW FUNCTION', 'AI', 'FIX', 'MEETING & TUTORIAL'];
+const selectedTags = ref<string[]>([]);
+const toggleTag = (tag: string) => {
+    if (selectedTags.value.includes(tag)) {
+        selectedTags.value = selectedTags.value.filter(t => t !== tag);
+    } else {
+        selectedTags.value.push(tag);
+    }
+};
+
 const fetchReport = async () => {
     try {
         const res = await fetch(`/api/reports/${reportId}`);
         if(res.ok) {
             const data = await res.json();
+            reportDate.value = new Date(data.report_date || new Date()).toISOString().split('T')[0] || '';
             reportTitle.value = data.title;
             reportDescription.value = data.description;
             imageUrl.value = data.image_url || '';
             youtubeUrl.value = data.youtube_url || '';
+            selectedTags.value = data.tags ? data.tags.split(',') : [];
             departments.value = [true]; // Hack to show form
         } else {
              throw new Error('API Error');
@@ -122,7 +157,7 @@ const fetchReport = async () => {
 }
 
 const updateReport = async () => {
-    if (!reportTitle.value || !reportDescription.value) {
+    if (!reportTitle.value || !reportDescription.value || !reportDate.value) {
         submitMessage.value = 'Please fill all required fields';
         submitSuccess.value = false;
         return;
@@ -136,7 +171,9 @@ const updateReport = async () => {
                 title: reportTitle.value,
                 description: reportDescription.value,
                 image_url: imageUrl.value,
-                youtube_url: youtubeUrl.value
+                youtube_url: youtubeUrl.value,
+                report_date: reportDate.value,
+                tags: selectedTags.value.join(',')
             })
         });
         

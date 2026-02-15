@@ -70,8 +70,24 @@
           <input v-model="imageUrl" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="text" placeholder="https://..."/>
         </div>
         <div class="space-y-1.5">
-          <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Youtube Embed URL (Optional)</label>
-          <input v-model="youtubeUrl" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="text" placeholder="https://youtube.com/..."/>
+          <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Video URL (YouTube / Google Drive)</label>
+          <input v-model="youtubeUrl" class="w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="text" placeholder="https://youtube.com/... or Google Drive link"/>
+        </div>
+      </div>
+
+      <!-- Tags Selection -->
+      <div class="space-y-2">
+        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Tags</label>
+        <div class="flex flex-wrap gap-2">
+            <button 
+                v-for="tag in availableTags" 
+                :key="tag"
+                @click="toggleTag(tag)"
+                :class="selectedTags.includes(tag) ? 'bg-primary text-white border-primary' : 'bg-white text-slate-600 border-slate-200'"
+                class="px-3 py-1.5 text-xs font-bold rounded-full border transition-colors uppercase"
+            >
+                {{ tag }}
+            </button>
         </div>
       </div>
 
@@ -154,6 +170,16 @@ const fetchDepartments = async () => {
     }
 }
 
+const availableTags = ['NEW FUNCTION', 'AI', 'FIX', 'MEETING & TUTORIAL'];
+const selectedTags = ref<string[]>([]);
+const toggleTag = (tag: string) => {
+    if (selectedTags.value.includes(tag)) {
+        selectedTags.value = selectedTags.value.filter(t => t !== tag);
+    } else {
+        selectedTags.value.push(tag);
+    }
+};
+
 const submitReport = async () => {
     if (!selectedDepartment.value || !reportTitle.value || !reportDescription.value) {
         submitMessage.value = 'Please fill all required fields';
@@ -171,7 +197,8 @@ const submitReport = async () => {
                 description: reportDescription.value,
                 report_date: reportDate.value,
                 image_url: imageUrl.value,
-                youtube_url: youtubeUrl.value
+                youtube_url: youtubeUrl.value,
+                tags: selectedTags.value.join(',') // Store as check strings
             })
         });
         

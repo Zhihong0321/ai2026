@@ -61,6 +61,20 @@
                 <span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">{{ report.deptName }}</span>
                 <span class="material-symbols-outlined text-slate-300 text-lg">more_horiz</span>
               </div>
+              <!-- Tags -->
+              <div v-if="report.tags" class="flex flex-wrap gap-1 mb-2">
+                 <span v-for="tag in report.tags.split(',')" :key="tag" 
+                    :class="{
+                        'bg-emerald-100 text-emerald-700': tag === 'NEW FUNCTION',
+                        'bg-purple-100 text-purple-700': tag === 'AI',
+                        'bg-amber-100 text-amber-700': tag === 'FIX',
+                        'bg-blue-100 text-blue-700': tag === 'MEETING & TUTORIAL'
+                    }"
+                    class="px-1.5 py-0.5 text-[9px] font-bold rounded border border-transparent uppercase"
+                 >
+                    {{ tag }}
+                 </span>
+              </div>
               <h3 class="text-sm font-bold text-slate-900 mb-1">{{ report.title }}</h3>
               <p class="text-xs text-slate-600 leading-relaxed">{{ report.description }}</p>
             </div>

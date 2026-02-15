@@ -15,6 +15,21 @@
              <span class="text-xs font-bold text-slate-400">{{ formatDate(report.report_date) }}</span>
         </div>
 
+        <!-- Tags -->
+        <div v-if="report.tags" class="flex flex-wrap gap-1">
+            <span v-for="tag in report.tags.split(',')" :key="tag" 
+            :class="{
+                'bg-emerald-100 text-emerald-700': tag === 'NEW FUNCTION',
+                'bg-purple-100 text-purple-700': tag === 'AI',
+                'bg-amber-100 text-amber-700': tag === 'FIX',
+                'bg-blue-100 text-blue-700': tag === 'MEETING & TUTORIAL'
+            }"
+            class="px-2 py-1 text-[10px] font-bold rounded border border-transparent uppercase"
+            >
+            {{ tag }}
+            </span>
+        </div>
+
         <!-- Title -->
         <h2 class="text-xl font-bold text-slate-900 leading-tight">{{ report.title }}</h2>
 
@@ -103,11 +118,18 @@ const getVideoEmbed = (url: string) => {
     }
 
     // Check for Google Drive
-    // Pattern: drive.google.com/file/d/[ID]/view
+    // Pattern: drive.google.com/file/d/[ID]/view or drive.google.com/open?id=[ID]
     const driveRegExp = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+    const driveOpenRegExp = /drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/;
+    
     const driveMatch = url.match(driveRegExp);
+    const driveOpenMatch = url.match(driveOpenRegExp);
+
     if (driveMatch && driveMatch[1]) {
         return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+    }
+    if (driveOpenMatch && driveOpenMatch[1]) {
+        return `https://drive.google.com/file/d/${driveOpenMatch[1]}/preview`;
     }
 
     return null;
