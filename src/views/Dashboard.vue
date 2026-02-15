@@ -111,6 +111,7 @@ onMounted(async () => {
     const deptResponse = await fetch('/api/departments');
     if (deptResponse.ok) {
       departments.value = await deptResponse.json();
+    } else {
       console.warn('Failed to fetch departments');
     }
 
