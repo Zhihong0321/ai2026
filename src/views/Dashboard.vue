@@ -24,9 +24,11 @@
       <section class="p-4">
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">Quick Access</h2>
-          <span class="text-xs font-medium text-primary">{{ departments.length }} Departments</span>
+          <span v-if="loading" class="text-xs font-medium text-primary animate-pulse">Loading...</span>
+          <span v-else class="text-xs font-medium text-primary">{{ departments.length }} Departments</span>
         </div>
-        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
+        <div v-if="loading" class="text-center py-10 text-slate-400 text-sm">Loading data...</div>
+        <div v-else class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
           <button 
             v-for="dept in departments" 
             :key="dept.id"
@@ -109,9 +111,11 @@ const router = useRouter();
 const departments = ref<any[]>([]);
 const reports = ref<any[]>([]);
 const error = ref('');
+const loading = ref(true);
 
 onMounted(async () => {
   try {
+    loading.value = true;
     const deptResponse = await fetch('/api/departments');
     if (deptResponse.ok) {
       departments.value = await deptResponse.json();
@@ -134,6 +138,8 @@ onMounted(async () => {
   } catch (e: any) {
     console.warn('API error', e);
     error.value = e.message || 'Unknown API Error';
+  } finally {
+    loading.value = false;
   }
 });
 

@@ -46,3 +46,6 @@ INSERT INTO ai2026_departments (name, short_name, icon, hod_name, hod_title) VAL
 ('Efficiency', 'EFF', 'speed', 'Barry Allen', 'Efficiency Expert'),
 ('Culture', 'CULTURE', 'favorite', 'Diana Prince', 'Culture Lead')
 ON CONFLICT DO NOTHING;
+
+-- Verify data was inserted (for debugging)
+-- SELECT * FROM ai2026_departments;

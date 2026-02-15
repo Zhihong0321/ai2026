@@ -51,6 +51,43 @@ if (process.env.NODE_ENV === 'production') {
 
 // API ROUTES - WITH EXPLICIT TRY/CATCH LOGGING
 
+// Seed endpoint - call once to populate departments
+app.post('/api/seed-departments', async (req, res) => {
+    try {
+        const departments = [
+            ['Operations & Maintenance', 'O&M', 'settings', 'John Doe', 'Head of O&M'],
+            ['Sales', 'SALES', 'handshake', 'Mark Henderson', 'Head of Sales'],
+            ['Finance', 'FINANCE', 'payments', 'Jane Smith', 'CFO'],
+            ['Administration', 'ADMIN', 'business_center', 'Admin User', 'Head of Admin'],
+            ['SEDA', 'SEDA', 'eco', 'Green Keeper', 'Head of SEDA'],
+            ['Customer Service', 'CS', 'support_agent', 'Sarah Connor', 'Head of CS'],
+            ['Human Resources', 'HR', 'groups', 'Mike Ross', 'CHRO'],
+            ['Engineering', 'ENG', 'precision_manufacturing', 'Tony Stark', 'Chief Engineer'],
+            ['Control & Instrumentation', 'C&I', 'memory', 'Steve Jobs', 'Head of C&I'],
+            ['Information Technology', 'IT', 'terminal', 'Bill Gates', 'CTO'],
+            ['Project Management', 'PROJECT', 'assignment', 'Peter Parker', 'Project Lead'],
+            ['Procurement', 'PROC', 'shopping_cart', 'Bruce Wayne', 'Head of Procurement'],
+            ['Efficiency', 'EFF', 'speed', 'Barry Allen', 'Efficiency Expert'],
+            ['Culture', 'CULTURE', 'favorite', 'Diana Prince', 'Culture Lead']
+        ];
+
+        for (const [name, short_name, icon, hod_name, hod_title] of departments) {
+            await pool.query(
+                `INSERT INTO ai2026_departments (name, short_name, icon, hod_name, hod_title) 
+                 VALUES ($1, $2, $3, $4, $5) 
+                 ON CONFLICT DO NOTHING`,
+                [name, short_name, icon, hod_name, hod_title]
+            );
+        }
+
+        const result = await pool.query('SELECT count(*) FROM ai2026_departments');
+        res.json({ message: 'Departments seeded successfully', count: result.rows[0].count });
+    } catch (err) {
+        console.error('ERROR in POST /api/seed-departments:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.get('/api/departments', async (req, res) => {
     try {
         console.log('GET /api/departments request received');
