@@ -105,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 const isAuthenticated = ref(false);
 const password = ref('');
@@ -113,7 +113,7 @@ const error = ref('');
 
 // Form data
 const departments = ref<any[]>([]);
-const selectedDepartment = ref(null);
+const selectedDepartment = ref<number | null>(null);
 const reportDate = ref(new Date().toISOString().split('T')[0]);
 const reportTitle = ref('');
 const reportDescription = ref('');
@@ -139,7 +139,7 @@ const fetchDepartments = async () => {
             departments.value = await res.json();
             // Default select IT if exists
             const itDept = departments.value.find((d: any) => d.short_name === 'IT');
-            if(itDept) selectedDepartment.value = itDept.id;
+            if(itDept) selectedDepartment.value = Number(itDept.id);
         } else {
              // Mock fallback logic
              departments.value = [

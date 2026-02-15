@@ -125,8 +125,8 @@ const mockReports = [
   { id: 3, dateMonth: '08-FEB', dateYear: '2026', deptName: 'O&M', title: 'Smart Grid Sensors', description: 'Integrated 500+ IoT sensors into the centralized monitoring dashboard.' },
 ];
 
-const departments = ref([]);
-const reports = ref([]);
+const departments = ref<any[]>([]);
+const reports = ref<any[]>([]);
 
 onMounted(async () => {
   try {
