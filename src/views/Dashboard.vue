@@ -51,7 +51,7 @@
           </button>
         </div>
         <div class="space-y-3">
-          <div v-for="report in reports" :key="report.id" class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm flex gap-4">
+          <div v-for="report in reports" :key="report.id" @click="goToReport(report.id)" class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm flex gap-4 cursor-pointer hover:border-primary/50 transition-all">
             <div class="flex flex-col items-center justify-center bg-slate-50 border border-slate-100 rounded-lg px-2 py-1 min-w-[70px] h-fit">
               <span class="text-[10px] font-bold text-slate-400 uppercase">{{ report.dateMonth }}</span>
               <span class="text-sm font-black text-slate-800">{{ report.dateYear }}</span>
@@ -145,5 +145,9 @@ onMounted(async () => {
 
 const goToDepartment = (id: number) => {
   router.push(`/department/${id}`);
+};
+
+const goToReport = (id: number) => {
+    router.push(`/report/${id}`);
 };
 </script>
