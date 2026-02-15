@@ -13,9 +13,24 @@ app.use(cors());
 app.use(express.json());
 
 // CONFIG
-const pool = new pg.Pool({
+const dbConfig = {
     connectionString: process.env.DATABASE_URL,
-    ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
+    ssl: process.env.DATABASE_URL && process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+};
+
+const pool = new pg.Pool(dbConfig);
+
+// Startup Check
+pool.connect().then(client => {
+    return client.query('SELECT NOW()').then(res => {
+        client.release();
+        console.log('✅ Connected to database successfully');
+    });
+}).catch(err => {
+    console.error('❌ Failed to connect to database on startup:', err.message);
+    if (!process.env.DATABASE_URL) {
+        console.error('⚠️ DATABASE_URL environment variable is MISSING in process.env!');
+    }
 });
 
 // PROOF ROUTE - Visit /proof to see if DB is readable
@@ -38,6 +53,7 @@ app.get('/proof', async (req, res) => {
         res.status(500).send(`
             <h1>❌ FAILED: APP CANNOT READ POSTGRES</h1>
             <p><strong>Error:</strong> ${err.message}</p>
+            <p><strong>Config:</strong> ${JSON.stringify(dbConfig, null, 2)}</p>
             <pre>${err.stack}</pre>
         `);
     }
