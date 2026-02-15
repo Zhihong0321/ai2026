@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IT Work Report Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#111418] font-display">
+<div class="max-w-md mx-auto bg-white dark:bg-slate-900 min-h-screen shadow-xl flex flex-col">
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-slate-900 p-4 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-10">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">terminal</span>
+</div>
+<h1 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">IT Work Report</h1>
+</header>
+<main class="flex-1 overflow-y-auto">
+<!-- Auth Section (Gate) -->
+<section class="p-6 border-b border-gray-100 dark:border-gray-800 bg-primary/5">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">lock</span>
+<h2 class="text-[#111418] dark:text-white text-md font-semibold">Admin Access Required</h2>
+</div>
+<div class="space-y-4">
+<label class="block">
+<span class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 block">Admin Password</span>
+<div class="relative flex items-center">
+<input class="form-input w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white focus:border-primary focus:ring-primary h-12 px-4 pr-10 text-base" placeholder="Enter security key to unlock form" type="password"/>
+<button class="absolute right-3 text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+</div>
+</label>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-xl">key</span>
+                        Unlock Form
+                    </button>
+</div>
+</section>
+<!-- Main Form Section -->
+<section class="p-6 space-y-6 opacity-50 pointer-events-none select-none">
+<div class="flex items-center justify-between mb-2">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">Daily Progress Log</h3>
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-500 text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded">Draft</span>
+</div>
+<!-- Department Selector -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Select Department</label>
+<div class="relative">
+<select class="form-select w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 pl-4 pr-10 focus:border-primary focus:ring-primary appearance-none">
+<option>Network Infrastructure</option>
+<option>Cybersecurity Ops</option>
+<option>Help Desk &amp; Support</option>
+<option>Cloud Architecture</option>
+<option>Software Development</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">expand_more</span>
+</div>
+</div>
+<!-- Date Picker -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Report Date</label>
+<div class="relative">
+<input class="form-input w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" type="date" value="2023-10-27"/>
+</div>
+</div>
+<!-- Report Title -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Report Title</label>
+<input class="form-input w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white h-12 px-4 focus:border-primary focus:ring-primary" placeholder="e.g., Weekly Server Maintenance" type="text"/>
+</div>
+<!-- Detailed Progress -->
+<div class="space-y-1.5">
+<label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Detailed Progress</label>
+<textarea class="form-textarea w-full rounded-lg border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 dark:text-white p-4 focus:border-primary focus:ring-primary resize-none" placeholder="Describe today's tasks, issues resolved, and pending items..." rows="6"></textarea>
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button class="w-full bg-primary/20 text-primary cursor-not-allowed font-bold py-4 px-4 rounded-xl flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">send</span>
+                        Submit Report
+                    </button>
+<p class="text-center text-xs text-gray-400 mt-4 italic">Authenticate to enable submission</p>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Simplified) -->
+<nav class="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-slate-900 px-6 py-3 flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">edit_document</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">history</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+</a>
+</nav>
+</div>
+</body></html>

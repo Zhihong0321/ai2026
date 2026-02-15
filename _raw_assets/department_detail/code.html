@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sales Department - IT Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] min-h-screen">
+<div class="max-w-md mx-auto bg-white min-h-screen shadow-sm flex flex-col">
+<header class="sticky top-0 z-10 flex items-center bg-white border-b border-gray-100 p-4 justify-between">
+<div class="flex items-center gap-3">
+<a class="text-primary flex items-center justify-center hover:bg-primary/10 rounded-full p-1 transition-colors" href="#">
+<span class="material-symbols-outlined text-[28px]">arrow_back</span>
+</a>
+<h1 class="text-[#111418] text-xl font-bold leading-tight tracking-tight">Sales Department</h1>
+</div>
+<button class="text-[#637588]">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<main class="flex-1 overflow-y-auto">
+<section class="p-4">
+<h2 class="text-[#111418] text-lg font-bold leading-tight mb-4">HOD Remarks &amp; Planning</h2>
+<div class="rounded-xl border border-gray-100 bg-white p-5 shadow-sm space-y-4">
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-full overflow-hidden bg-primary/10 border-2 border-primary/20">
+<img alt="Mark - Head of Sales" class="w-full h-full object-cover" data-alt="Professional headshot of a middle-aged male executive" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjxrEAkiSphIdkS7fcw-EwwT8Q0g0IfE-ui-6mABAqCGrR37rQRzLwrgpsRhIR1I9Ujc0AO-J6hkkXCrSExZxVQYBaGQQ-3Zz2emxeTB7paSizaRHF0x4JMBQaBK6gVBkLhEsZLPxpUXbqpPX1NtIewDhCGoBKewnkaiyaqlTlEKiBV0ALyP2LClPYmMNWZ0buLBUlNlY2rTMXwgDdglSLQw6y287HL316kq18z0K6PfNSWh1vaBukGSR4dqg_KAXbZ6D2Vwn50_lC"/>
+</div>
+<div>
+<p class="text-[#111418] text-lg font-bold">Mark Henderson</p>
+<p class="text-[#637588] text-sm font-medium">Head of Sales</p>
+</div>
+</div>
+<div class="space-y-3 pt-2">
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">assignment</span>
+<div>
+<p class="text-sm font-semibold text-[#111418]">Request of Features</p>
+<p class="text-sm text-[#637588] leading-relaxed">CRM system function upgrade for real-time lead attribution and automated follow-ups.</p>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">trending_up</span>
+<div>
+<p class="text-sm font-semibold text-[#111418]">Q4 Strategic Planning</p>
+<p class="text-sm text-[#637588] leading-relaxed">Integration of external market data into the regional sales dashboard by mid-November.</p>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5 text-[20px]">verified</span>
+<div>
+<p class="text-sm font-semibold text-[#111418]">Review Status</p>
+<p class="text-sm text-[#637588] leading-relaxed">Weekly automated reporting efficiency has improved by 40% since last update.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="p-4 bg-gray-50/50">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-[#111418] text-lg font-bold leading-tight">IT Work Reports</h2>
+<span class="text-xs font-semibold text-primary px-2 py-1 bg-primary/10 rounded-full">Recent Activity</span>
+</div>
+<div class="space-y-3">
+<div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[11px] font-bold uppercase tracking-wider text-primary bg-primary/5 px-2 py-0.5 rounded">Oct 24, 2023</span>
+<span class="material-symbols-outlined text-green-500 text-[18px]">check_circle</span>
+</div>
+<p class="text-sm font-semibold text-[#111418] mb-1">CRM Integration Upgrade</p>
+<p class="text-sm text-[#637588] leading-normal">Successfully deployed the enhanced lead tracking module. Verified data sync across all regional nodes.</p>
+</div>
+<div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[11px] font-bold uppercase tracking-wider text-primary bg-primary/5 px-2 py-0.5 rounded">Oct 20, 2023</span>
+<span class="material-symbols-outlined text-green-500 text-[18px]">check_circle</span>
+</div>
+<p class="text-sm font-semibold text-[#111418] mb-1">Dashboard Performance Tuning</p>
+<p class="text-sm text-[#637588] leading-normal">Optimized SQL queries for the Sales Dashboard. Reduced average load time from 4.2s to 0.8s.</p>
+</div>
+<div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[11px] font-bold uppercase tracking-wider text-primary bg-primary/5 px-2 py-0.5 rounded">Oct 15, 2023</span>
+<span class="material-symbols-outlined text-green-500 text-[18px]">check_circle</span>
+</div>
+<p class="text-sm font-semibold text-[#111418] mb-1">Automated Reporting System</p>
+<p class="text-sm text-[#637588] leading-normal">Implemented Python-based automation for Monday morning sales summary emails to the executive team.</p>
+</div>
+<div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm opacity-75">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[11px] font-bold uppercase tracking-wider text-primary bg-primary/5 px-2 py-0.5 rounded">Oct 08, 2023</span>
+<span class="material-symbols-outlined text-green-500 text-[18px]">check_circle</span>
+</div>
+<p class="text-sm font-semibold text-[#111418] mb-1">Mobile Access Security</p>
+<p class="text-sm text-[#637588] leading-normal">Enforced 2FA for all field sales agents accessing internal tools via mobile devices.</p>
+</div>
+</div>
+<div class="mt-6 flex justify-center">
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                        View All Reports
+                        <span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+</button>
+</div>
+</section>
+</main>
+<nav class="sticky bottom-0 bg-white border-t border-gray-100 px-4 pb-6 pt-2">
+<div class="flex justify-around items-center max-w-sm mx-auto">
+<a class="flex flex-col items-center gap-1 text-[#637588]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-[10px] font-medium uppercase tracking-tighter">Dashboard</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">table_chart</span>
+<p class="text-[10px] font-bold uppercase tracking-tighter">Departments</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#637588]" href="#">
+<span class="material-symbols-outlined">description</span>
+<p class="text-[10px] font-medium uppercase tracking-tighter">Reports</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#637588]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-medium uppercase tracking-tighter">Settings</p>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

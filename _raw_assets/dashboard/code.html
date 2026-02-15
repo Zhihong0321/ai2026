@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>2026 Digitalization Plan Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light text-slate-900 min-h-screen flex flex-col">
+<!-- Top Navigation / Header -->
+<header class="sticky top-0 z-10 bg-white border-b border-slate-200 px-4 py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary text-white p-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900">2026 Digitalization Plan</h1>
+</div>
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-slate-600">account_circle</span>
+</button>
+</header>
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Quick Access Section -->
+<section class="p-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">Quick Access</h2>
+<span class="text-xs font-medium text-primary">14 Departments</span>
+</div>
+<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
+<!-- O&M -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">settings</span>
+<span class="text-[10px] font-bold text-slate-700">O&amp;M</span>
+</button>
+<!-- SALES -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">handshake</span>
+<span class="text-[10px] font-bold text-slate-700">SALES</span>
+</button>
+<!-- FINANCE -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">payments</span>
+<span class="text-[10px] font-bold text-slate-700">FINANCE</span>
+</button>
+<!-- ADMIN -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">business_center</span>
+<span class="text-[10px] font-bold text-slate-700">ADMIN</span>
+</button>
+<!-- SEDA -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">eco</span>
+<span class="text-[10px] font-bold text-slate-700">SEDA</span>
+</button>
+<!-- CS -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">support_agent</span>
+<span class="text-[10px] font-bold text-slate-700">CS</span>
+</button>
+<!-- HR -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">groups</span>
+<span class="text-[10px] font-bold text-slate-700">HR</span>
+</button>
+<!-- ENGINEERING -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">precision_manufacturing</span>
+<span class="text-[10px] font-bold text-slate-700 truncate w-full text-center">ENG</span>
+</button>
+<!-- C&I -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">memory</span>
+<span class="text-[10px] font-bold text-slate-700">C&amp;I</span>
+</button>
+<!-- IT -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">terminal</span>
+<span class="text-[10px] font-bold text-slate-700">IT</span>
+</button>
+<!-- PROJECT -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">assignment</span>
+<span class="text-[10px] font-bold text-slate-700">PROJECT</span>
+</button>
+<!-- PROCUREMENT -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">shopping_cart</span>
+<span class="text-[10px] font-bold text-slate-700">PROC</span>
+</button>
+<!-- EFFICIENCY -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">speed</span>
+<span class="text-[10px] font-bold text-slate-700">EFF</span>
+</button>
+<!-- CULTURE -->
+<button class="flex flex-col items-center justify-center p-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary/50 transition-all group">
+<span class="material-symbols-outlined text-primary mb-2 group-hover:scale-110 transition-transform">favorite</span>
+<span class="text-[10px] font-bold text-slate-700">CULTURE</span>
+</button>
+</div>
+</section>
+<!-- Recent Work Reports Section -->
+<section class="p-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">Recent Work Reports</h2>
+<button class="text-xs font-semibold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                    Filter
+                </button>
+</div>
+<div class="space-y-3">
+<!-- Report Item 1 -->
+<div class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm flex gap-4">
+<div class="flex flex-col items-center justify-center bg-slate-50 border border-slate-100 rounded-lg px-2 py-1 min-w-[70px] h-fit">
+<span class="text-[10px] font-bold text-slate-400 uppercase">11-FEB</span>
+<span class="text-sm font-black text-slate-800">2026</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">IT Department</span>
+<span class="material-symbols-outlined text-slate-300 text-lg">more_horiz</span>
+</div>
+<h3 class="text-sm font-bold text-slate-900 mb-1">Network Infrastructure Expansion</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Completed phase 2 of core router upgrades across regional hubs. Achieved 30% reduction in latency.</p>
+</div>
+</div>
+<!-- Report Item 2 -->
+<div class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm flex gap-4">
+<div class="flex flex-col items-center justify-center bg-slate-50 border border-slate-100 rounded-lg px-2 py-1 min-w-[70px] h-fit">
+<span class="text-[10px] font-bold text-slate-400 uppercase">10-FEB</span>
+<span class="text-sm font-black text-slate-800">2026</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">FINANCE</span>
+<span class="material-symbols-outlined text-slate-300 text-lg">more_horiz</span>
+</div>
+<h3 class="text-sm font-bold text-slate-900 mb-1">ERP Cloud Migration</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Data cleansing phase for payroll modules finalized. Testing scheduled for next week.</p>
+</div>
+</div>
+<!-- Report Item 3 -->
+<div class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm flex gap-4 opacity-80">
+<div class="flex flex-col items-center justify-center bg-slate-50 border border-slate-100 rounded-lg px-2 py-1 min-w-[70px] h-fit">
+<span class="text-[10px] font-bold text-slate-400 uppercase">08-FEB</span>
+<span class="text-sm font-black text-slate-800">2026</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">O&amp;M</span>
+<span class="material-symbols-outlined text-slate-300 text-lg">more_horiz</span>
+</div>
+<h3 class="text-sm font-bold text-slate-900 mb-1">Smart Grid Sensors Deployment</h3>
+<p class="text-xs text-slate-600 leading-relaxed">Integrated 500+ IoT sensors into the centralized monitoring dashboard for real-time diagnostics.</p>
+</div>
+</div>
+<!-- Report Item 4 -->
+<div class="bg-white p-4 border border-slate-200 rounded-xl shadow-sm flex gap-4 opacity-70">
+<div class="flex flex-col items-center justify-center bg-slate-50 border border-slate-100 rounded-lg px-2 py-1 min-w-[70px] h-fit">
+<span class="text-[10px] font-bold text-slate-400 uppercase">05-FEB</span>
+<span class="text-sm font-black text-slate-800">2026</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">HR</span>
+<span class="material-symbols-outlined text-slate-300 text-lg">more_horiz</span>
+</div>
+<h3 class="text-sm font-bold text-slate-900 mb-1">Digital Upskilling Initiative</h3>
+<p class="text-xs text-slate-600 leading-relaxed">80% of staff completed 'Introduction to AI' course as part of the 2026 vision plan.</p>
+</div>
+</div>
+<!-- Load More Button -->
+<button class="w-full py-3 bg-white border border-slate-200 rounded-xl text-slate-500 text-xs font-bold uppercase tracking-widest hover:bg-slate-50 transition-colors">
+                    Load Archive Reports
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-3 pb-6 flex items-center justify-around z-20">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shield_with_heart</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Admin</span>
+</a>
+<!-- Floating Action Button for new report (optional addition for modern feel) -->
+<button class="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-primary text-white rounded-full shadow-lg shadow-primary/30 flex items-center justify-center border-4 border-background-light">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Stats</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Config</span>
+</a>
+</nav>
+</body></html>
