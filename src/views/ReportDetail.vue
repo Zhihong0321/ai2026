@@ -24,8 +24,8 @@
         </div>
 
         <!-- YouTube -->
+        <div v-if="getYouTubeEmbed(report.youtube_url)" class="rounded-xl overflow-hidden border border-slate-200 shadow-sm aspect-video">
             <iframe 
-                v-if="getYouTubeEmbed(report.youtube_url)"
                 :src="getYouTubeEmbed(report.youtube_url) || ''" 
                 title="Report Video"
                 frameborder="0" 
@@ -34,6 +34,7 @@
                 class="w-full h-full"
             ></iframe>
         </div>
+
 
         <!-- Body -->
         <div class="prose prose-sm prose-slate max-w-none">
