@@ -137,6 +137,25 @@ app.post('/api/reports', async (req, res) => {
     }
 });
 
+// NEW: Update Report
+app.put('/api/reports/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, description, image_url, youtube_url } = req.body;
+
+        const result = await pool.query(
+            'UPDATE ai2026_work_reports SET title = $1, description = $2, image_url = $3, youtube_url = $4 WHERE id = $5 RETURNING *',
+            [title, description, image_url, youtube_url, id]
+        );
+
+        if (result.rows.length === 0) return res.status(404).json({ error: 'Report not found' });
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(`ERROR in PUT /api/reports/${req.params.id}:`, err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // NEW: Delete Report
 app.delete('/api/reports/:id', async (req, res) => {
     try {
