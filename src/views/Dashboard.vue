@@ -107,7 +107,6 @@ const router = useRouter();
 // Mock data deleted - relying on API
 
 const departments = ref<any[]>([]);
-const departments = ref<any[]>([]);
 const reports = ref<any[]>([]);
 const error = ref('');
 
@@ -129,7 +128,6 @@ onMounted(async () => {
         dateMonth: new Date(r.report_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }),
         dateYear: new Date(r.report_date).getFullYear(),
       }));
-    } else {
     } else {
       console.log('Failed to fetch reports');
     }
