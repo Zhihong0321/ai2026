@@ -24,9 +24,9 @@
         </div>
 
         <!-- YouTube -->
-        <div v-if="getYouTubeEmbed(report.youtube_url)" class="rounded-xl overflow-hidden border border-slate-200 shadow-sm aspect-video">
-             <iframe 
-                :src="getYouTubeEmbed(report.youtube_url)" 
+            <iframe 
+                v-if="getYouTubeEmbed(report.youtube_url)"
+                :src="getYouTubeEmbed(report.youtube_url) || ''" 
                 title="Report Video"
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -95,7 +95,7 @@ const getYouTubeEmbed = (url: string) => {
     if (!url) return null;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+    return (match && match[2] && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
 };
 
 const handleImageError = (e: Event) => {
