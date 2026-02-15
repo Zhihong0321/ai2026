@@ -118,7 +118,7 @@ app.post('/api/reports', async (req, res) => {
 
 // CATCH-ALL ROUTE (Must be last)
 if (process.env.NODE_ENV === 'production') {
-    app.get('*', (req, res) => {
+    app.get(/.*/, (req, res) => {
         res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     });
 }
