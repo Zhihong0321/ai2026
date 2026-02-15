@@ -17,7 +17,23 @@ app.use(express.json());
 // Database Connection
 const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL || 'postgresql://postgres:password@localhost:5432/daily_report',
-    ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
+    ssl: process.env.DATABASE_URL && process.env.DATABASE_URL.includes('rlwy.net') ? { rejectUnauthorized: false } : false
+});
+
+// Test DB Connection on Start
+pool.connect((err, client, release) => {
+    if (err) {
+        console.error('❌ Error acquiring client', err.stack);
+    } else {
+        console.log('✅ Database connected successfully');
+        client.query('SELECT NOW()', (err, result) => {
+            release();
+            if (err) {
+                return console.error('❌ Error executing query', err.stack);
+            }
+            console.log('✅ Database Time:', result.rows[0].now);
+        });
+    }
 });
 
 // Serve static files in production
@@ -36,6 +52,17 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // API Routes
+
+// Health Check
+app.get('/health', async (req, res) => {
+    try {
+        await pool.query('SELECT 1');
+        res.json({ status: 'healthy', database: 'connected' });
+    } catch (err) {
+        console.error('Health check failed:', err);
+        res.status(500).json({ status: 'unhealthy', database: 'disconnected', error: err.message });
+    }
+});
 
 // Get all departments
 app.get('/api/departments', async (req, res) => {
